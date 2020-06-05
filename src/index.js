@@ -48,8 +48,16 @@ function renderBreed(breed) {
     liElement.innerText = breed;
     
     ulContainer.appendChild(liElement);
+    liElement.addEventListener('click', handleClick)
 }
 
+function handleClick(e) {
+   let liBreed = e.target
+   let r = Math.ceil(Math.random()*255)
+   let g = Math.ceil(Math.random()*255)
+   let b = Math.ceil(Math.random()*255)
+   liBreed.style.color =  `rgb(${r}, ${g}, ${b})`
+}
 
 // Main Function
 
