@@ -59,11 +59,53 @@ function handleClick(e) {
    liBreed.style.color =  `rgb(${r}, ${g}, ${b})`
 }
 
+// Render Options
+
+function renderOptions(){
+    let dropDownMenu = document.querySelector("#breed-dropdown")
+    for(let i = 97; i <= 122; i++) {
+        let option = document.createElement("option")
+        option.value = String.fromCharCode(i)
+        option.innerText = String.fromCharCode(i)
+        dropDownMenu.appendChild(option)
+    }
+}
+
+function selectMenu(){
+    let getGetMenu = document.querySelector("select")
+    getGetMenu.addEventListener("change", handleMenuClick)
+}
+
+function handleMenuClick(e){
+   const selectedLetter = e.target.value
+   const breedUrl = 'https://dog.ceo/api/breeds/list/all'
+   fetch(breedUrl)
+   .then( res => res.json() ) 
+   .then( data => {
+    const breedsArray = Object.keys(data.message)
+    let filteredBreed = breedsArray.filter((breed) => {return breed[0] === selectedLetter })
+    reRenderBreeds(filteredBreed)
+    }   
+    )  
+}
+
+function reRenderBreeds(arr) {
+   let dogBreeds = document.getElementById("dog-breeds")
+   dogBreeds.innerHTML = ""
+   arr.forEach(breedName => { 
+    let listEl = document.createElement("li")
+    listEl.innerText = breedName
+    dogBreeds.appendChild(listEl)
+   })
+}
+
+
 // Main Function
 
 function openFunction(){
     getDogImage()
     getDogBreed()
-    
+    renderOptions()
+    selectMenu()
 }
 
