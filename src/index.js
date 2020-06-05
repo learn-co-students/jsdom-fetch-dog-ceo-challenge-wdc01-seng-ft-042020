@@ -4,6 +4,7 @@ const breedUrl = 'https://dog.ceo/api/breeds/list/all'
 
 
 document.addEventListener("DOMContentLoaded", () => {
+    let allDogBreeds;
     fetch(imgUrl)
         .then(resp => resp.json())
         .then(json => json["message"].forEach(addImgToDom))
@@ -15,7 +16,32 @@ document.addEventListener("DOMContentLoaded", () => {
                 addBreedToDom(key, msg[key])
             }
         })
+        .then( () => {
+            let ulBreed = document.querySelector("#dog-breeds")
+            allDogBreeds = [...ulBreed.children]
+        })
+    let ulBreed = document.querySelector("#dog-breeds")
+    ulBreed.addEventListener("click", handleColorClick)
+
+    let dropdown = document.querySelector("#breed-dropdown")
+    dropdown.addEventListener("change", (e) => {handleChange(e, allDogBreeds)})
 })
+
+function handleChange(e, breedAry) {
+    console.log(breedAry)
+    let ulBreed = document.querySelector("#dog-breeds")
+    let selected = breedAry.filter(breed => breed.innerText.startsWith(e.target.value))
+    ulBreed.innerHTML = ''
+    selected.forEach( goodBoy => ulBreed.appendChild(goodBoy))
+}
+
+function handleColorClick(e) {
+    // debugger
+    if (e.target.nodeName === "LI") {
+        console.log("HELLO")
+        e.target.style.color = "blue"
+    }
+}
 
 function addImgToDom(imageURL) {
     let imageContainer = document.querySelector("#dog-image-container")
@@ -25,8 +51,6 @@ function addImgToDom(imageURL) {
 }
 
 function addBreedToDom(breedKey, breedAry) {
-    //console.log(breedKey)
-
     let ulBreed = document.querySelector("#dog-breeds")
     if (breedAry.length === 0) {
         let li = document.createElement("li")
@@ -38,7 +62,6 @@ function addBreedToDom(breedKey, breedAry) {
             let li = document.createElement("li")
             li.innerText = `${breedAry[ind]} ${breedKey}`
             ulBreed.appendChild(li)
-        }    
+        }
     }
-
 }
