@@ -1,6 +1,5 @@
 console.log('%c HI', 'color: firebrick')
 
-
 addEventListener("DOMContentLoaded", openFunction) 
 
 // Image Logic
@@ -23,7 +22,7 @@ function renderImage (pickURL) {
     let image = document.createElement("img")
     image.src = pickURL
     image.alt = "image of dog"
-    image.style.width = "50%"
+    image.style.width = "40vw"
     imageList.appendChild(image)
 }
 
